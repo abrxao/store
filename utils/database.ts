@@ -8,7 +8,7 @@ const client = new MongoClient(db_url, {
 } as MongoClientOptions);
 
 
-export async function connect() {
+export default async function connect() {
     await client.connect();
     const db = client.db("sample_mflix");
     return {db, client}

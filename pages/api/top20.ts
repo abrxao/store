@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { connect } from "@/utils/database";
+import connect from "@/utils/database";
+import { ObjectId } from "mongodb";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,10 +8,13 @@ export default async function handler(
 ): Promise<void> {
   try {
     const { db } = await connect();
-    const data = await db.collection("site_forms").find().toArray();
+
+    const data = await db.collection("movies").findOne({
+      title: "Battleship Potemkin",
+    });
+
     res.status(200).json(data);
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Erro interno do servidor" });
+    console.log(e);
   }
 }
