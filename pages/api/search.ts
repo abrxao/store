@@ -32,7 +32,7 @@ export default async function handler(
           },
         },
       },
-      {$project:{title:1, genres:1, metacritic:1}}
+      {$project:{title:1, genres:1, metacritic:1, poster:1}}
     ];
 
     const data = await db.collection("movies").aggregate(agg).skip(req.body.page*20).limit(20).toArray();
