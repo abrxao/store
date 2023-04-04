@@ -2,6 +2,7 @@
 import { FormEvent, useCallback, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import MovieCard from "@/components/MovieCard";
 
 export default function Home() {
   const [page, setPage] = useState<number>(0);
@@ -21,15 +22,8 @@ export default function Home() {
 
   const handleSubmit = (e: FormEvent, page: number) => {
     e.preventDefault();
+    setPage(page)
     handleSearch(page);
-  };
-  const handlePrev = (e: FormEvent) => {
-    setPage((page) => page - 1);
-    handleSubmit(e, page - 1);
-  };
-  const handleNext = (e: FormEvent) => {
-    setPage((page) => page + 1);
-    handleSubmit(e, page + 1);
   };
 
   return (
@@ -61,7 +55,7 @@ export default function Home() {
                 <button
                   type="button"
                   className="p-1 bg-gray-200"
-                  onClick={(e) => handlePrev(e)}
+                  onClick={(e) => handleSubmit(e, page -1)}
                   disabled={page === 0}
                 >
                   prev
@@ -69,7 +63,7 @@ export default function Home() {
                 <button
                   type="button"
                   className="p-1 bg-gray-200"
-                  onClick={(e) => handleNext(e)}
+                  onClick={(e) => handleSubmit(e, page + 1)}
                 >
                   next
                 </button>
@@ -77,20 +71,16 @@ export default function Home() {
             </form>
 
             <h2>page {page + 1}</h2>
-            {/* <pre>{JSON.stringify(movies, null, 2)}</pre> */}
-            {movies.map((elem, index) => {
+            <div className="p-4 flex flex-wrap justify-between gap-y-4">
+              {movies.map((elem, index) => {
               return (
-                <div key={index + 1}>
-                  {elem.title}
-                  <Image
-                    src={elem.poster}
-                    width={300}
-                    height={300}
-                    alt={`${elem.title} poster's`}
-                  />
+                <div key={index +  1}>
+                  <MovieCard src={elem.poster} title={elem.title}/>
                 </div>
               );
             })}
+            </div>
+            
           </>
         )}
       </div>

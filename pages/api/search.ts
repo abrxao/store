@@ -18,24 +18,52 @@ export default async function handler(
                   query: req.body.search,
                   path: "genres",
                 },
-              }
+              },
             ],
             should: [
               {
                 range: {
-                  gte: 75,
+                  gte: 60,
                   path: "metacritic",
-                  score: { constant: { value: 10 } },
+                  score: { constant: { value: 7 } },
+                },
+              },
+              {
+                range: {
+                  gte: 30,
+                  path: "runtime",
+                  score: { constant: { value: 2 } },
+                },
+              },
+              {
+                range: {
+                  gte: 7,
+                  path: "imdb.rating",
+                  score: { constant: { value: 7 } },
+                },
+              },
+              {
+                range: {
+                  gte: 150,
+                  path: "imdb.votes",
+                  score: { constant: { value: 15 } },
                 },
               },
             ],
           },
         },
       },
-      {$project:{title:1, genres:1, metacritic:1, poster:1}}
+      {
+        $project: { imdb:1 ,title: 1, genres: 1, metacritic: 1, poster: 1, runtime: 1, directors:1, languages:1, year:1 },
+      },
     ];
 
-    const data = await db.collection("movies").aggregate(agg).skip(req.body.page*20).limit(20).toArray();
+    const data = await db
+      .collection("movies")
+      .aggregate(agg)
+      .skip(req.body.page * 20)
+      .limit(20)
+      .toArray();
     res.status(200).json(data);
     await client.close();
   } catch (e) {
