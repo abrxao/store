@@ -25,7 +25,7 @@ export default async function handler(
                 range: {
                   gte: 60,
                   path: "metacritic",
-                  score: { constant: { value: 7 } },
+                  score: { constant: { value: 10 } },
                 },
               },
               {

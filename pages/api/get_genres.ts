@@ -8,19 +8,7 @@ export default async function handler(
   try {
     const { db } = await connect();
 
-    const data = await db
-      .collection("movies")
-      .find(
-        {
-          genres: "Action",
-          year: { $gte: 1995 },
-        },
-        { projection: { title: 1, metacritic: 1, year: 1, plot:1 } }
-      )
-      .sort({ metacritic: -1 })
-      .limit(20)
-      .toArray();
-
+    const data = await db.collection("movies").distinct("genres");
     res.status(200).json(data);
   } catch (e) {
     console.log(e);

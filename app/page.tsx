@@ -1,13 +1,24 @@
 "use client";
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
 import MovieCard from "@/components/MovieCard";
 
 export default function Home() {
+
+  const [genres, setGenres] = useState<string[]>([""]);
+
+  const getGenres = useCallback(async () => {
+    const { data } = await axios.post("api/get_genres");
+    return setGenres(data);
+  }, [genres]);
+
   const [page, setPage] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [movies, setMovies] = useState<any[]>([]);
+
+  useEffect(() => {
+    getGenres()
+  }, []);
 
   const handleSearch = useCallback(
     async (page: number) => {
@@ -17,12 +28,12 @@ export default function Home() {
       });
       setMovies(data);
     },
-    [page, search]
+    [page, search] //eslint-disable-line
   );
 
   const handleSubmit = (e: FormEvent, page: number) => {
     e.preventDefault();
-    setPage(page)
+    setPage(page);
     handleSearch(page);
   };
 
@@ -31,12 +42,23 @@ export default function Home() {
       <form>
         <div className="p-2 w-full flex flex-col items-center justify-center">
           <label htmlFor="genres_input">procure por genero</label>
-          <input
-            type="text"
-            id="genres_input"
-            className="border p-1 bg-black text-white rounded-md"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+
+          <div className="w-48">
+            <select name="genres" id="genres" onChange={(e)=>{setSearch(e.target.value)}}>
+              {genres.map((elem, index) => {
+                return <option key={"item " + index}>{elem}</option>;
+              })}
+            </select>
+            {/* <select
+          
+              onChange={e=>setSearch(e.target.value)}
+            >
+              {genres.map((elem, index) => {
+                return <Option key={index + 1}>{elem}</Option>;
+              })}
+            </select> */}
+          </div>
+
           <button
             type="submit"
             className="p-2 border bg-gray-200"
@@ -55,7 +77,7 @@ export default function Home() {
                 <button
                   type="button"
                   className="p-1 bg-gray-200"
-                  onClick={(e) => handleSubmit(e, page -1)}
+                  onClick={(e) => handleSubmit(e, page - 1)}
                   disabled={page === 0}
                 >
                   prev
@@ -71,16 +93,34 @@ export default function Home() {
             </form>
 
             <h2>page {page + 1}</h2>
-            <div className="p-4 flex flex-wrap justify-between gap-y-4">
+            <div className="p-4 flex flex-wrap justify-start gap-4">
               {movies.map((elem, index) => {
-              return (
-                <div key={index +  1}>
-                  <MovieCard src={elem.poster} title={elem.title}/>
-                </div>
-              );
-            })}
+                return (
+                  <div key={index + 1}>
+                    <MovieCard src={elem.poster} title={elem.title} />
+                  </div>
+                );
+              })}
             </div>
-            
+            <form action="">
+              <div className="flex gap-1 my-2">
+                <button
+                  type="button"
+                  className="p-1 bg-gray-200"
+                  onClick={(e) => handleSubmit(e, page - 1)}
+                  disabled={page === 0}
+                >
+                  prev
+                </button>
+                <button
+                  type="button"
+                  className="p-1 bg-gray-200"
+                  onClick={(e) => handleSubmit(e, page + 1)}
+                >
+                  next
+                </button>
+              </div>
+            </form>
           </>
         )}
       </div>
