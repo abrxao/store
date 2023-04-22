@@ -2,39 +2,25 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
+import SearchProvider, { useSearchContext } from "@/components/SearchContext";
+import GenreSearch from "@/components/GenreSearch";
 
-export default function Home() {
-
-  const [genres, setGenres] = useState<string[]>([""]);
-
-  const getGenres = useCallback(async () => {
-    const { data } = await axios.post("api/get_genres");
-    return setGenres(data);
-  }, [genres]);
-
-  const [page, setPage] = useState<number>(0);
-  const [search, setSearch] = useState<string>("");
-  const [movies, setMovies] = useState<any[]>([]);
-
-  useEffect(() => {
-    getGenres()
-  }, []);
-
-  const handleSearch = useCallback(
-    async (page: number) => {
-      const { data } = await axios.post("api/search", {
-        search: search,
-        page: page,
-      });
-      setMovies(data);
-    },
-    [page, search] //eslint-disable-line
-  );
+function SearchPage() {
+  const searchContext = useSearchContext();
+  if (!searchContext) return null;
+  const { changePage, movies, changeMovies, search, page } = searchContext;
 
   const handleSubmit = (e: FormEvent, page: number) => {
     e.preventDefault();
-    setPage(page);
+    changePage(page);
     handleSearch(page);
+  };
+  const handleSearch = async (page: number) => {
+    const { data } = await axios.post("api/search", {
+      search: search,
+      page: page,
+    });
+    changeMovies(data);
   };
 
   return (
@@ -43,21 +29,7 @@ export default function Home() {
         <div className="p-2 w-full flex flex-col items-center justify-center">
           <label htmlFor="genres_input">procure por genero</label>
 
-          <div className="w-48">
-            <select name="genres" id="genres" onChange={(e)=>{setSearch(e.target.value)}}>
-              {genres.map((elem, index) => {
-                return <option key={"item " + index}>{elem}</option>;
-              })}
-            </select>
-            {/* <select
-          
-              onChange={e=>setSearch(e.target.value)}
-            >
-              {genres.map((elem, index) => {
-                return <Option key={index + 1}>{elem}</Option>;
-              })}
-            </select> */}
-          </div>
+          <GenreSearch />
 
           <button
             type="submit"
@@ -93,7 +65,7 @@ export default function Home() {
             </form>
 
             <h2>page {page + 1}</h2>
-            <div className="p-4 flex flex-wrap justify-start gap-4">
+            <div className="p-4 flex flex-wrap justify-around gap-4">
               {movies.map((elem, index) => {
                 return (
                   <div key={index + 1}>
@@ -127,3 +99,10 @@ export default function Home() {
     </div>
   );
 }
+
+const Home = () => (
+  <SearchProvider>
+    <SearchPage />
+  </SearchProvider>
+);
+export default Home;
