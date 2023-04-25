@@ -16,11 +16,19 @@ function SearchPage() {
     handleSearch(page);
   };
   const handleSearch = async (page: number) => {
-    const { data } = await axios.post("api/search", {
-      search: search,
-      page: page,
-    });
-    changeMovies(data);
+    try{
+      await axios
+      .post("api/search", {
+        search: search,
+        page: page,
+      })
+      .then((res) => {
+        changeMovies(res.data);
+      });
+    }catch(error){
+      console.error("Erro ao se conectar ao servidor:", error);
+    }
+    
   };
 
   return (

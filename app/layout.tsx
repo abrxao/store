@@ -1,12 +1,7 @@
-import { ReactNode } from 'react'
-import './globals.css'
-import SearchProvider from '@/components/SearchContext'
+import { ReactNode } from "react";
+import "./globals.css";
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       {/*
@@ -14,9 +9,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
-          {children}
-      </body>
+      <body>{children}</body>
     </html>
-  )
+  );
 }

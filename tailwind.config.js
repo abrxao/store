@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const withMT = require("@material-tailwind/react/utils/withMT");
  
-module.exports = withMT( {
+module.exports = withMT({
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -28,17 +28,15 @@ module.exports = withMT( {
         contain: "contain",
         "250%": "250% 250%",
       },
+      backgroundImage: {
+        loading:
+          "linear-gradient(111deg, #f00 3%, rgba(0,0,0,0.10) 23%, #f00 47%, rgba(0,0,0,0.10) 74%, #f00 96%)",
+      },
       backgroundPosition: {
         "p-30%": "22% 30%",
       },
       screens: {
         xsm: "350px",
-      },
-      keyframes: {
-        slide: {
-          "0%": { transform: "translateX(-110%)" },
-          "100%": { transform: "translateX(0%)" },
-        },
       },
       animation: {
         slide: "slide 1500ms ease-in-out",

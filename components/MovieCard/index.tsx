@@ -6,8 +6,8 @@ import {
   Avatar,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import { FunctionComponent, ReactNode } from "react";
-
+import { FunctionComponent, ReactNode, useState } from "react";
+import { TfiFaceSad } from "react-icons/tfi";
 interface MovieCProps {
   children?: ReactNode;
   title: string;
@@ -18,6 +18,7 @@ interface MovieCProps {
 }
 
 const MovieCard: FunctionComponent<MovieCProps> = ({ src, title }) => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(true);
   return (
     <Card
       shadow={false}
@@ -29,12 +30,19 @@ const MovieCard: FunctionComponent<MovieCProps> = ({ src, title }) => {
         color="transparent"
         className="absolute inset-0 m-0 h-full w-full"
       >
+        {!isLoaded && (
+          <div className="w-full h-full bg-white flex flex-col items-center justify-center">
+            <p>IMAGE NOT FOUND</p>
+            <TfiFaceSad size={40}/>
+          </div>
+        )}
         <Image
           src={src}
-          className="object-cover"
+          className="object-cover movieCard"
           width={300}
           height={300}
-          alt=""
+          alt={`${title} card`}
+          onErrorCapture={() => setIsLoaded(false)}
         />
         <div className=" absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />
       </CardHeader>
@@ -46,16 +54,6 @@ const MovieCard: FunctionComponent<MovieCProps> = ({ src, title }) => {
         >
           {title}
         </Typography>
-        {/* <Typography variant="h5" className="mb-4 text-gray-400">
-          Candice Wu
-        </Typography>
-        <Avatar
-          size="xl"
-          variant="circular"
-          alt="candice wu"
-          className="border-2 border-white"
-          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-        /> */}
       </CardBody>
     </Card>
   );
