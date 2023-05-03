@@ -1,35 +1,37 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useSearchContext } from "../SearchContext";
-import axios from "axios";
-import { Option } from "@material-tailwind/react";
 import Skeleton from "../Skeleton/Skeleton";
+import getGenres from "./getGenres";
 
 const GenreSearch = () => {
   const searchContext = useSearchContext();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  if (!searchContext) return null;
-  const { genres, changeGenres, changeSearch } = searchContext;
 
-  const getGenres = async () => {
-    await axios.get("api/get_genres")
-      .then((res) => {
-        changeGenres(res.data)
-        setIsLoading(false)
-      })
-  };
-  getGenres();
+  const { data: genres, isFetching } = useQuery<string[]>(
+    "genres",
+    async()=>{
+      return await getGenres()
+    }
+    ,
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60, //1minute
+    }
+  );
+
+  if (!searchContext) return null;
+  const { changeSearch } = searchContext;
 
   return (
-    <div className="p-4">
-      {isLoading && <Skeleton className="w-40 h-8 rounded-md" />}
-      {!isLoading && (
+    <div >
+      {isFetching && <Skeleton className="w-40 h-10 rounded-md" />}
+      {!isFetching && (
         <select
           onChange={(e) => changeSearch(e.target.value)}
-          className="p-2 rounded-md overflow-hidden loading"
+          className="p-3 text-md rounded-md overflow-hidden loading"
         >
-          <option>select one</option>
-          {genres.map((elem, index) => {
+          <option value=''>Select one</option>
+          {genres?.map((elem, index) => {
             return <option key={index + 1}>{elem}</option>;
           })}
         </select>

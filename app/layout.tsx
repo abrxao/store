@@ -1,15 +1,21 @@
+'use client'
 import { ReactNode } from "react";
+import { QueryClientProvider } from "react-query";
 import "./globals.css";
+import { queryClient } from "@/utils/queryClient";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  
   return (
-    <html lang="en">
-      {/*
+    <QueryClientProvider client={queryClient}>
+      <html lang="en">
+        {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
-      <head />
-      <body>{children}</body>
-    </html>
+        <head />
+        <body>{children}</body>
+      </html>
+    </QueryClientProvider>
   );
 }

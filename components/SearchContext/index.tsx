@@ -1,15 +1,13 @@
+"use client";
 import {
   createContext,
   FunctionComponent,
   PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
 interface SearchContextValue {
-  genres: string[];
-  changeGenres: (update: string[]) => void;
   page: number;
   changePage: (update: number) => void;
   search: string;
@@ -21,14 +19,9 @@ interface SearchContextValue {
 const SearchContext = createContext<SearchContextValue | undefined>(undefined);
 
 const SearchProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
-  const [genres, setGenres] = useState<string[]>([""]);
   const [page, setPage] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [movies, setMovies] = useState<any[]>([]);
-
-  const changeGenres = (update: string[]) => {
-    setGenres(update);
-  };
   const changeMovies = (update: any[]) => {
     setMovies(update);
   };
@@ -42,8 +35,6 @@ const SearchProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
-        genres,
-        changeGenres,
         search,
         changeSearch,
         page,

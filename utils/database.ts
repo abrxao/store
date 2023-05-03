@@ -7,10 +7,8 @@ const client = new MongoClient(db_url, {
   useUnifiedTopology: true,
 } as MongoClientOptions);
 
-
 export default async function connect() {
     await client.connect();
     const db = client.db("sample_mflix");
     return {db, client}
 };
-

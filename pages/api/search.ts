@@ -30,6 +30,13 @@ export default async function handler(
               },
               {
                 range: {
+                  gte: 1999,
+                  path: "year",
+                  score: { constant: { value: 17 } },
+                },
+              },
+              {
+                range: {
                   gte: 30,
                   path: "runtime",
                   score: { constant: { value: 2 } },
@@ -54,7 +61,17 @@ export default async function handler(
         },
       },
       {
-        $project: { imdb:1 ,title: 1, genres: 1, metacritic: 1, poster: 1, runtime: 1, directors:1, languages:1, year:1 },
+        $project: {
+          imdb: 1,
+          title: 1,
+          genres: 1,
+          metacritic: 1,
+          poster: 1,
+          runtime: 1,
+          directors: 1,
+          languages: 1,
+          year: 1,
+        },
       },
     ];
 
@@ -64,6 +81,7 @@ export default async function handler(
       .skip(req.body.page * 20)
       .limit(20)
       .toArray();
+
     res.status(200).json(data);
     await client.close();
   } catch (e) {

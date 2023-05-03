@@ -22,7 +22,7 @@ const MovieCard: FunctionComponent<MovieCProps> = ({ src, title }) => {
   return (
     <Card
       shadow={false}
-      className="relative grid w-[300px] aspect-[3/4] items-end justify-center overflow-hidden text-center"
+      className="relative grid w-cardMovie aspect-[3/4] items-end justify-center overflow-hidden text-center"
     >
       <CardHeader
         floated={false}
@@ -33,7 +33,7 @@ const MovieCard: FunctionComponent<MovieCProps> = ({ src, title }) => {
         {!isLoaded && (
           <div className="w-full h-full bg-white flex flex-col items-center justify-center">
             <p>IMAGE NOT FOUND</p>
-            <TfiFaceSad size={40}/>
+            <TfiFaceSad size={40} />
           </div>
         )}
         <Image
