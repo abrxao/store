@@ -75,6 +75,27 @@ export default async function handler(
       },
     ];
 
+    const countMovies = [
+      {
+        $search: {
+          index: "movies_search",
+          compound: {
+            must: [
+              {
+                text: {
+                  query: req.body.search,
+                  path: "genres",
+                },
+              },
+            ],
+          },
+        },
+      },
+    ];
+    const moviesCount = await db.collection("movies").countDocuments({
+      genres: req.body.search
+    });
+
     const data = await db
       .collection("movies")
       .aggregate(agg)
@@ -82,7 +103,7 @@ export default async function handler(
       .limit(20)
       .toArray();
 
-    res.status(200).json(data);
+    res.status(200).json({ data, moviesCount });
     await client.close();
   } catch (e) {
     console.log(e);
