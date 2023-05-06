@@ -41,10 +41,10 @@ const MovieCard: FunctionComponent<MovieCProps> = ({
         style={{
           backgroundColor: getRGBColor(metacritic),
         }}
-        className="absolute z-40 top-4 left-4 rounded"
+        className="absolute z-40 top-4 left-4 rounded border shadow-lg"
       >
         <Tooltip content='Metacritic Score'>
-          <Chip value={`${metacritic}`} className="p-2 bg-" />
+          <Chip value={`${metacritic}`} className="p-2 bg- " />
         </Tooltip>
       </div>
 

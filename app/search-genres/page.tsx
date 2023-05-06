@@ -17,7 +17,7 @@ function SearchPage() {
   const { movies, page, allPages, handleSubmit, loadingSearch } = searchContext;
 
   return (
-    <div className="min-h-[100vh] bg-gray-800">
+    <div className="">
       <div
         className="bg-gray-900 drop-shadow-card-lg w-full flex flex-col items-end p-4
         md:py-6 md:px-12 
@@ -28,6 +28,7 @@ function SearchPage() {
             Procure por gênero
           </label>
         </div>
+
         <form>
           <div className="flex gap-2 items-center">
             <GenreSearch />
@@ -64,7 +65,7 @@ function SearchPage() {
           </div>
         </form>
       </div>
-      <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center ">
         {movies.length === 0 && (
           <div>
             {loadingSearch && (
@@ -87,7 +88,7 @@ function SearchPage() {
               <PrevNextButton page={page} pages={allPages} />
             </div>
 
-            <div className="w-full p-2 flex flex-wrap justify-center gap-y-6 md:gap-8">
+            <div className="w-full p-2 flex flex-wrap justify-center gap-y-6 md:gap-8 ">
               {loadingSearch && (
                 <>
                   <SkeletonCreator
@@ -108,7 +109,10 @@ function SearchPage() {
                   );
                 })}
             </div>
-            <PrevNextButton page={page} pages={allPages} />
+            <div className="flex flex-col gap-4 mt-4">
+              <PrevNextButton page={page} pages={allPages} />
+            </div>
+            
           </>
         )}
       </div>
