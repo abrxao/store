@@ -1,28 +1,28 @@
 "use client";
-import MovieCard from "./SGcomponents/MovieCard";
-import SearchProvider, { useSearchContext } from "./SGcomponents/SearchContext";
-import GenreSearch from "./SGcomponents/GenreSearch";
+import MovieCard from "@/components/MovieCard";
+import SearchProvider, {
+  useSearchContext,
+} from "@/components/SGcomponents/SearchContext";
+import GenreSearch from "@/components/SGcomponents/GenreSearch";
 import SkeletonCreator from "@/components/SkeletonCreator";
 import { Button, Chip } from "@material-tailwind/react";
 import UseAnimations from "react-useanimations";
 import infinity from "react-useanimations/lib/infinity";
 import { BsSearch } from "react-icons/bs";
-import PrevNextButton from "./SGcomponents/NextPrevButtons";
+import PrevNextButton from "@/components/SGcomponents/NextPrevButtons";
 
 function SearchPage() {
   const searchContext = useSearchContext();
   if (!searchContext) return null;
-  const {
-    movies,
-    page,
-    allPages,
-    handleSubmit,
-    loadingSearch
-  } = searchContext;
+  const { movies, page, allPages, handleSubmit, loadingSearch } = searchContext;
 
   return (
-    <div className="bg-gray-900 h-[100vh]">
-      <div className="py-4 px-4 bg-gray-800 w-full flex flex-col items-end">
+    <div className="min-h-[100vh] bg-gray-800">
+      <div
+        className="bg-gray-900 drop-shadow-card-lg w-full flex flex-col items-end p-4
+        md:py-6 md:px-12 
+      "
+      >
         <div className="py-2">
           <label htmlFor="genres_input" className="text-gray-200 font-thin">
             Procure por gênero
@@ -31,7 +31,7 @@ function SearchPage() {
         <form>
           <div className="flex gap-2 items-center">
             <GenreSearch />
-            {loadingSearch && (
+            {loadingSearch ? (
               <div className=" overflow-hidden rounded-md">
                 <SkeletonCreator
                   className="w-full border overflow-hidden rounded-md cursor-wait brightness-110"
@@ -39,7 +39,8 @@ function SearchPage() {
                 >
                   <Button
                     disabled={loadingSearch}
-                    className="flex items-center gap-2 p-2"
+                    className="flex items-center p-1 gap-2 
+                    md:p-2"
                   >
                     <UseAnimations
                       animation={infinity}
@@ -49,12 +50,12 @@ function SearchPage() {
                   </Button>
                 </SkeletonCreator>
               </div>
-            )}
-            {!loadingSearch && (
+            ) : (
               <Button
                 type="submit"
                 onClick={(e) => handleSubmit(e, 0)}
-                className="brightness-110 p-4"
+                className="brightness-110 items-center p-3
+                md:p-3"
                 disabled={loadingSearch}
               >
                 <BsSearch className="text-md" />
@@ -63,7 +64,7 @@ function SearchPage() {
           </div>
         </form>
       </div>
-      <div className="w-full bg-gray-900 flex flex-col items-center">
+      <div className="w-full flex flex-col items-center">
         {movies.length === 0 && (
           <div>
             {loadingSearch && (
@@ -78,13 +79,14 @@ function SearchPage() {
         )}
         {movies.length > 0 && (
           <>
-            <div className="flex gap-4 mt-4">
+            <div className="flex flex-col gap-4 mt-4">
               <Chip
                 value={`page ${page + 1} of ${allPages}`}
-                className="rounded p-1 text-xsm text-gray-200"
+                className="rounded p-2 text-center text-xsm bg-gray-300 text-gray-800 drop-shadow"
               />
+              <PrevNextButton page={page} pages={allPages} />
             </div>
-            <PrevNextButton page={page} pages={allPages} />
+
             <div className="w-full p-2 flex flex-wrap justify-center gap-y-6 md:gap-8">
               {loadingSearch && (
                 <>

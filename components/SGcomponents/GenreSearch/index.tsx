@@ -23,11 +23,20 @@ const GenreSearch = () => {
 
   return (
     <div>
-      {isFetching && <Skeleton className="w-40 h-10 rounded-md" quantity={1}/>}
-      {!isFetching && (
+      {isFetching ? (
+        <Skeleton
+          className="w-32 h-8 rounded
+          md:w-40 md:h-10
+          
+          "
+          quantity={1}
+        />
+      ) : (
         <select
           onChange={(e) => changeSearch(e.target.value)}
-          className="p-3 text-md rounded-md overflow-hidden loading"
+          className="p-2 text-md rounded-md overflow-hidden
+          md:p-3
+          "
         >
           <option value="">Select one</option>
           {genres?.map((elem, index) => {

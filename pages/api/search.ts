@@ -75,23 +75,6 @@ export default async function handler(
       },
     ];
 
-    const countMovies = [
-      {
-        $search: {
-          index: "movies_search",
-          compound: {
-            must: [
-              {
-                text: {
-                  query: req.body.search,
-                  path: "genres",
-                },
-              },
-            ],
-          },
-        },
-      },
-    ];
     const moviesCount = await db.collection("movies").countDocuments({
       genres: req.body.search
     });

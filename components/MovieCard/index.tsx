@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { FunctionComponent, ReactNode, useState } from "react";
 import { TfiFaceSad } from "react-icons/tfi";
+
 interface MovieCProps {
   children?: ReactNode;
   title: string;
@@ -30,10 +31,11 @@ const MovieCard: FunctionComponent<MovieCProps> = ({
     const green = Math.round((value * 255) / 100);
     return `rgb(${red}, ${green}, 40)`;
   }
+  
   return (
     <Card
       shadow={false}
-      className="relative grid w-cardMovie aspect-[3/4] items-end justify-center overflow-hidden text-center drop-shadow-card-lg hover:drop-shadow-card-2xl duration-200"
+      className="relative grid border w-cardMovie aspect-[3/4] items-end justify-center overflow-hidden text-center drop-shadow-card-lg hover:drop-shadow-card-2xl duration-200"
     >
       <div
         style={{
