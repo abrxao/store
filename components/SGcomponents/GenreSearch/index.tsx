@@ -24,7 +24,6 @@ const GenreSearch = () => {
         <Skeleton
           className="w-32 h-8 rounded
           md:w-40 md:h-10
-          
           "
           quantity={1}
         />

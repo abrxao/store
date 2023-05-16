@@ -25,7 +25,6 @@ export default async function getGenres() {
       data: response.data,
       lastRequest: today,
     };
-    console.log("fetched");
     localStorage.setItem("genres", JSON.stringify(genres));
 
     return response.data;

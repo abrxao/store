@@ -71,6 +71,7 @@ export default async function handler(
           directors: 1,
           languages: 1,
           year: 1,
+          plot:1,
         },
       },
     ];

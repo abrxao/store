@@ -16,9 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <head />
         <body className="relative min-h-screen pb-24">
           {children}
-          <div className="p-4 absolute bottom-0 bg-gray-900 w-full text-gray-200">
-            <footer>Devepoled by Abrxao</footer>
-          </div>
+          
         </body>
       </html>
     </QueryClientProvider>

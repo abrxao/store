@@ -21,7 +21,7 @@ const PrevNextButton: FunctionComponent<PrevNextProps> = ({
         size="sm"
         variant="outlined"
         color="blue-gray"
-        onClick={(e) => redirect(`/search-genres/${genre}:page=${page - 1}`)}
+        onClick={(e) => redirect(`/search-genres/${genre}:${page - 1}:${pages}`)}
         disabled={page === 1}
       >
         <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
@@ -34,7 +34,7 @@ const PrevNextButton: FunctionComponent<PrevNextProps> = ({
         size="sm"
         variant="outlined"
         color="blue-gray"
-        onClick={(e) => redirect(`/search-genres/${genre}:page=${page + 1}`)}
+        onClick={(e) => redirect(`/search-genres/${genre}:${page + 1}:${pages}`)}
         disabled={page === pages}
       >
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />

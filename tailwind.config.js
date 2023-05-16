@@ -31,6 +31,9 @@ module.exports = withMT({
       width: {
         cardMovie: "clamp(220px, 100%, 300px)",
       },
+      maxWidth: {
+        "8xl": "1366px",
+      },
       backgroundSize: {
         auto: "auto",
         cover: "cover",
