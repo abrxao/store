@@ -58,7 +58,7 @@ export default function PagesSearch({ params }: { params: { genre: string } }) {
               })}
           </div>
           <div className="flex flex-col gap-4 mt-4">
-            <PrevNextButton genre={search} page={page} pages={parseInt(pgs)} />
+            <PrevNextButton genre={search} page={page} pages={pages} />
           </div>
         </>
       </div>
