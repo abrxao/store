@@ -1,11 +1,11 @@
 "use client";
 import { useQuery } from "react-query";
-import { useSearchContext } from "../SearchContext";
 import Skeleton from "@/components/SkeletonCreator";
 import getGenres from "./getGenres";
+import useSearchStates from "@/store/store";
 
 const GenreSearch = () => {
-  const searchContext = useSearchContext();
+  const { setSearch } = useSearchStates();
 
   const { data: genres, isFetching } = useQuery<string[]>(
     "genres",
@@ -17,9 +17,6 @@ const GenreSearch = () => {
       staleTime: 1000 * 60, //1minute
     }
   );
-
-  if (!searchContext) return null;
-  const { changeSearch } = searchContext;
 
   return (
     <div>
@@ -33,7 +30,7 @@ const GenreSearch = () => {
         />
       ) : (
         <select
-          onChange={(e) => changeSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           className="p-2 text-md rounded-md overflow-hidden
           md:p-3
           "

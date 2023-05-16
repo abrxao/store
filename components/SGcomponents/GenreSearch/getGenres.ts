@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function getGenres() {
   const today = new Date();
-
+  
   if (localStorage.getItem("genres")) {
     const genres = JSON.parse(localStorage.getItem("genres") as string);
     const lastResquest = new Date(genres.lastRequest);

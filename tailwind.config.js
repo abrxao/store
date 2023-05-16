@@ -25,8 +25,8 @@ module.exports = withMT({
         "7xl": "4.2rem",
       },
       dropShadow: {
-        "card-lg": "0px 8px 12px rgba(0, 0, 0, 0.9)",
-        "card-2xl": "0px 14px 24px rgba(0, 0, 0, 0.9)",
+        "card-lg": "0px 0px 0px rgba(0, 0, 0, 0.9)",
+        "card-2xl": "8px 8px 0px rgba(0, 0, 0, 0.9)",
       },
       width: {
         cardMovie: "clamp(220px, 100%, 300px)",

@@ -35,7 +35,7 @@ const MovieCard: FunctionComponent<MovieCProps> = ({
   return (
     <Card
       shadow={false}
-      className="relative grid border w-cardMovie aspect-[3/4] items-end justify-center overflow-hidden text-center drop-shadow-card-lg hover:drop-shadow-card-2xl duration-200"
+      className="relative grid border w-cardMovie aspect-[3/4] items-end justify-center overflow-hidden text-center drop-shadow-card-lg  hover:drop-shadow-card-2xl hover:-translate-x-2 hover:-translate-y-2 duration-200 m-4 "
     >
       <div
         style={{
@@ -43,8 +43,12 @@ const MovieCard: FunctionComponent<MovieCProps> = ({
         }}
         className="absolute z-40 top-4 left-4 rounded border shadow-lg"
       >
-        <Tooltip content='Metacritic Score'>
-          <Chip value={`${metacritic}`} className="p-2 bg- " />
+        <Tooltip content="Metacritic Score">
+          {metacritic ? (
+            <Chip value={`${metacritic}`} className="p-2 bg- " />
+          ) : (
+            <Chip value="not found :(" className="p-2 bg- aspect-1" />
+          )}
         </Tooltip>
       </div>
 
