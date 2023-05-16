@@ -29,7 +29,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
             <Button
               disabled={search == ""}
               className="p-2"
-              onClick={(e) => redirect(`./${search}:page=${page}`)}
+              onClick={(e) => redirect(`/search-genres/${search}:page=${page}`)}
             >
               <AiOutlineSearch size={19} />
             </Button>
