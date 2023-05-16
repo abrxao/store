@@ -1,9 +1,6 @@
 "use client";
-import useSearchStates from "@/store/store";
 
-export default function SearchPage() {
-  const { page, allPages, } = useSearchStates();
-  
+export default function SearchPage() {  
   return (
     <div className="p-8">
       no results
